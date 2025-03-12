@@ -24,16 +24,16 @@ jobs:
         run: npm install
 
       - name: Create a directory to keep test restuls
-        run: mkdir test-results 
+        run: mkdir artifacts 
 
       - name: Run tests
-        run: npm run check > test-results/results.txt 
+        run: npm run check > artifacts/results.txt 
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
-          path: ./test-results
+          name: artifacts
+          path: ./artifacts
 
   deploy:
     runs-on: self-hosted
@@ -42,11 +42,11 @@ jobs:
       - name: Download test results
         uses: actions/download-artifact@v4
         with:
-          name: test-results
-          path: ./test-results
+          name: artifacts
+          path: ./artifacts
 
       - name: Display test results
-        run: cat ./test-results/*.txt
+        run: cat ./artifacts/*.txt
 
       - name: Checkout code
         uses: actions/checkout@v4
